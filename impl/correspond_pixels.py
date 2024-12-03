@@ -29,7 +29,7 @@ def match_edge_maps(bmap1, bmap2, max_dist, outlier_cost):
     # initialize
     height, width = bmap1.shape
     m1, m2 = np.zeros_like(bmap1, dtype=np.int), np.zeros_like(bmap2, dtype=np.int)
-    match1, match2 = np.ones((*bmap1.shape, 2), dtype=int) * -1, np.ones((*bmap2.shape, 2), dtype=int) * -1
+    match1, match2 = np.ones((*bmap1.shape, 2), dtype=np.int64) * -1, np.ones((*bmap2.shape, 2), dtype=np.int64) * -1
 
     r = int(np.ceil(max_dist))  # radius of search window
 
@@ -59,7 +59,7 @@ def match_edge_maps(bmap1, bmap2, max_dist, outlier_cost):
     # construct nodeID->pixel and pixel->nodeID
     n1, n2 = 0, 0
     node_to_pix1, node_to_pix2 = [], []
-    pix_to_node1, pix_to_node2 = np.zeros_like(bmap1, dtype=int), np.zeros_like(bmap2, dtype=int)
+    pix_to_node1, pix_to_node2 = np.zeros_like(bmap1, dtype=np.int64), np.zeros_like(bmap2, dtype=np.int64)
     for x in range(width):
         for y in range(height):
             pix_to_node1[y, x] = -1
@@ -281,7 +281,7 @@ def fast_match_edge_maps(bmap1, bmap2, max_dist, outlier_cost, need_cost=False):
     # initialize
     height, width = bmap1.shape
     m1, m2 = np.zeros_like(bmap1, dtype=np.int32), np.zeros_like(bmap2, dtype=np.int32)
-    match1, match2 = -np.ones((*bmap1.shape, 2), dtype=int), -np.ones((*bmap2.shape, 2), dtype=int)
+    match1, match2 = -np.ones((*bmap1.shape, 2), dtype=np.int64), -np.ones((*bmap2.shape, 2), dtype=np.int64)
 
     # figure out which nodes are matchable
     # KDTree implementation is faster than convolution implementation
