@@ -34,7 +34,8 @@ def nms_process_one_image(image, save_path=None, save=True):
     ox, oy = grad2(conv_tri(edge, 4))
     oxx, _ = grad2(ox)
     oxy, oyy = grad2(oy)
-    ori = np.mod(np.arctan(oyy * np.sign(-oxy) / (oxx + 1e-5)), np.pi)
+    oxx = np.where(oxx == 0, 1e-5, oxx)
+    ori = np.mod(np.arctan(oyy * np.sign(-oxy) / oxx), np.pi)
     out = np.zeros_like(edge)
     r, s, m, w, h = 1, 5, float(1.01), int(out.shape[1]), int(out.shape[0])
     solver.nms(out.ctypes.data_as(c_float_pointer),
