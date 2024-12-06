@@ -9,7 +9,7 @@ from scipy.interpolate import interp1d
 
 from .bwmorph_thin import bwmorph_thin
 from .correspond_pixels import correspond_pixels
-
+from tqdm import tqdm
 
 eps = 2e-6
 
@@ -152,15 +152,18 @@ def edges_eval_dir(res_dir, gt_dir, cleanup=0, thrs=99, max_dist=0.0075, thin=Tr
 
     assert os.path.isdir(res_dir) and os.path.isdir(gt_dir)
     ids = [os.path.split(file)[-1] for file in glob.glob(os.path.join(gt_dir, "*.mat"))]
-    for ci, i in enumerate(ids):
-        i = os.path.splitext(i)[0]
-        res = os.path.join(eval_dir, "{}_ev1.txt".format(i))
-        if os.path.isfile(res):
-            continue
-        im = os.path.join(res_dir, "{}.png".format(i))
-        gt = os.path.join(gt_dir, "{}.mat".format(i))
-        print("{}/{} eval {}...".format(ci, len(ids), im))
-        edges_eval_img(im, gt, out=res, thrs=thrs, max_dist=max_dist, thin=thin, workers=workers)
+    
+    with tqdm(total=len(ids)) as pbar:
+        for ci, i in enumerate(ids):
+            i = os.path.splitext(i)[0]
+            res = os.path.join(eval_dir, "{}_ev1.txt".format(i))
+            if os.path.isfile(res):
+                continue
+            im = os.path.join(res_dir, "{}.png".format(i))
+            gt = os.path.join(gt_dir, "{}.mat".format(i))
+            # print("{}/{} eval {}...".format(ci, len(ids), im))
+            edges_eval_img(im, gt, out=res, thrs=thrs, max_dist=max_dist, thin=thin, workers=workers)
+            pbar.update(1)
 
     # collect evaluation results
     cnt_sum_r_p = 0

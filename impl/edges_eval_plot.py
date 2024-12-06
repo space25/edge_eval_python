@@ -30,8 +30,8 @@ def edges_eval_plot(algs, nms=None, cols=None):
         p = f * r / (2 * r - f)
         plt.plot(r, p, color=[0, 1, 0])
         plt.plot(p, r, color=[0, 1, 0])
-    h = plt.plot(0.7235, 0.9014, marker="o", markersize=8, color=[0, 0.5, 0],
-                 markerfacecolor=[0, 0.5, 0], markeredgecolor=[0, 0.5, 0])
+    # h = plt.plot(0.7235, 0.9014, marker="o", markersize=8, color=[0, 0.5, 0],
+    #              markerfacecolor=[0, 0.5, 0], markeredgecolor=[0, 0.5, 0])
     plt.xticks(np.linspace(0, 1, 11))
     plt.yticks(np.linspace(0, 1, 11))
     plt.xlabel("Recall")
@@ -72,8 +72,11 @@ def edges_eval_plot(algs, nms=None, cols=None):
         plt.show()
         return
 
-    nms = ["[F=.80] Human"] + ["[F={:.2f}] {}".format(res[i, 3], nms[i]) for i in range(n)]
-    hs = h + hs
-    plt.legend(hs, nms, loc="lower left")
-    plt.show()
+    chart_path = '{}.png'.format(algs[0])
+    print(chart_path)
+    ax.set_title(prefix)
+    plt.savefig(chart_path)
+    
+    if False:
+        plt.show()
 

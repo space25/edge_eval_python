@@ -16,6 +16,7 @@ def main(args):
     workers = args.workers  # number workers
     nms_process(model_name_list, result_dir, save_dir, key, file_format)
     eval_edge(alg, model_name_list, save_dir, gt_dir, workers)
+    print("====================================\n")
 
 
 if __name__ == '__main__':
