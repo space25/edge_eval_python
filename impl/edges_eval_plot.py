@@ -62,7 +62,18 @@ def edges_eval_plot(algs, nms=None, cols=None):
     # plot results for every algorithm (plot best last)
     for i in range(n - 1, -1, -1):
         hs[i] = plt.plot(prs[i, :, 1], prs[i, :, 2], linestyle="-", linewidth=3, color=cols[i])[0]
-        prefix = "ODS={:.3f}, OIS={:.3f}, AP={:.3f}, R50={:.3f}".format(*res[i, [3, 6, 7, 8]])
+        # ods_t, ods_r, ods_p, ods_f, ois_r.item(), ois_p.item(), ois_f.item(), ap]
+        print("ODS={:.3f}, OIS={:.3f}, AP={:.3f}, R50={:.3f}".format(*res[i, [3, 6, 7, 8]]))
+        prefix = ("ODS_t={:.3f}, "  # 0
+                  "ODS_r={:.3f}, "  # 1
+                  "ODS_p={:.3f}, "  # 2
+                  "ODS_F={:.3f},\n "  # 3
+                  "OIS_r={:.3f}, "  # 4
+                  "OIS_p={:.3f}, "  # 5
+                  "OIS_F={:.3f},\n "  # 6
+                  "AP={:.3f}, "
+                  "R50={:.3f}").format(
+            *res[i, [0, 1, 2, 3, 4, 5, 6, 7, 8]])
         if nms:
             prefix += " - {}".format(nms[i])
         print(prefix)
@@ -76,7 +87,6 @@ def edges_eval_plot(algs, nms=None, cols=None):
     print(chart_path)
     ax.set_title(prefix)
     plt.savefig(chart_path)
-    
+
     if False:
         plt.show()
-
